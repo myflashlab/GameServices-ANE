@@ -1,0 +1,1 @@
+"GoogleSignIn.bundle" and "gpg.bundle" are required for the iOS version only.
