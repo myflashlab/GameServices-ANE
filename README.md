@@ -242,9 +242,9 @@ Embedding the ANE:
 3. Air SDK 19 or higher
 
 # Commercial Version
-COMING SOON...
+http://www.myflashlabs.com/product/game-services-air-native-extension/
 
-![Game Services ANE](http://www.myflashlabs.com/wp-content/uploads/2016/4/product_adobe-air-ane-game-services-595x738.jpg)
+![Game Services ANE](http://www.myflashlabs.com/wp-content/uploads/2016/04/product_adobe-air-ane-extension-game-services-595x738.jpg)
 
 # Tutorials
 [How to embed ANEs into **FlashBuilder**, **FlashCC** and **FlashDevelop**](https://www.youtube.com/watch?v=Oubsb_3F3ec&list=PL_mmSjScdnxnSDTMYb1iDX4LemhIJrt1O)  
