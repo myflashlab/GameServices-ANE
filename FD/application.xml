@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <application xmlns="http://ns.adobe.com/air/application/20.0">
   <id>com.doitflash.games.ex.realtime</id>
-  <versionNumber>0.0.1</versionNumber>
+  <versionNumber>1.0.0</versionNumber>
   <supportedProfiles>mobileDevice</supportedProfiles>
   <filename>exGameServices</filename>
   <name>Game Services ANE</name>
@@ -10,6 +10,8 @@
 	
 	<uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	
+	<!- required if you wish to receive the player email address or access token ID
 	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
 	
 	<application>
@@ -26,6 +28,7 @@
 			</intent-filter>
 		</activity>
 		
+		<!- application ID which identifies your game settings in the Google Game Services console -->
 		<meta-data android:name="com.google.android.gms.games.APP_ID" android:value="\ 567100130405" />
 		<meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
 		
@@ -42,6 +45,9 @@
 		<!--iOS 7.0 or higher can support this ANE-->
 		<key>MinimumOSVersion</key>
 		<string>7.0</string>
+		 
+		<key>UIPrerenderedIcon</key>
+		<true/>
 		
 		<key>com.google.android.gms.games.APP_ID</key>
 		<string>567100130405-tu362slbd0dhh89e5906qbpuk6pracs3.apps.googleusercontent.com</string>
@@ -75,15 +81,47 @@
 			
 		<key>UIRequiresPersistentWiFi</key>
 		<string>NO</string>
-			
+	
 		<key>UIDeviceFamily</key>
 		<array>
 			<string>1</string>
 			<string>2</string>
 		</array>
 		
+		<key>UIBackgroundModes</key>
+		<array>
+			<string>fetch</string>
+			<string>remote-notification</string>
+		</array>
+		
 	]]></InfoAdditions>
     <requestedDisplayResolution>high</requestedDisplayResolution>
+	  
+	<Entitlements>
+	<![CDATA[
+	
+		<key>keychain-access-groups</key>
+		<array>
+			<string>56AX2RU6RZ.*</string>		
+		</array>
+		
+		<key>get-task-allow</key>
+		<!-- set to 'false' for adHoc or production builds -->
+		<true/>
+		
+		<key>application-identifier</key>
+		<string>56AX2RU6RZ.com.doitflash.games.ex.realtime</string>
+		
+		<key>com.apple.developer.team-identifier</key>
+		<string>56AX2RU6RZ</string>
+		
+		<key>aps-environment</key>
+		<!-- set to 'production' for adHoc or production builds -->
+		<string>development</string>
+		
+	]]></Entitlements>
+	  
+	  
   </iPhone>
 	
 	
@@ -122,6 +160,7 @@
     <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.base</extensionID>
     <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.basement</extensionID>
 	
+	<!-- And finally embed the main gameServices ANE -->
     <extensionID>com.myflashlab.air.extensions.gameServices</extensionID>
 	
   </extensions>

@@ -1,0 +1,4 @@
+Google Games Services Adobe Air Native Extension
+
+*May 14, 2016 - V1.0.0*
+* beginning of the journey!

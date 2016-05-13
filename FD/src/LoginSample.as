@@ -28,6 +28,11 @@ package
 	
 	import com.myflashlab.air.extensions.gameServices.GameServices;
 	import com.myflashlab.air.extensions.gameServices.google.events.AuthEvents;
+	import com.myflashlab.air.extensions.gameServices.google.player.PlayerLevel;
+	import com.myflashlab.air.extensions.gameServices.google.events.RestAPIEvents;
+	
+	import flash.net.URLRequestMethod;
+	import flash.net.URLVariables;
 	
 	
 	/**
@@ -88,7 +93,7 @@ package
 			_list.space = BTN_SPACE;
 			
 			// initialize the Game Services and wait for a successful init call before doing anything else
-			GameServices.init();
+			GameServices.init(false); // set this to 'true' when you are building for production
 			GameServices.google.auth.addEventListener(AuthEvents.INIT, onInit);
 		}
 		
@@ -194,6 +199,7 @@ package
 			GameServices.google.auth.addEventListener(AuthEvents.ERROR, 					onLoginError);
 			GameServices.google.auth.addEventListener(AuthEvents.CANCELED, 					onCanceled);
 			GameServices.google.auth.addEventListener(AuthEvents.SETTING_WINDOW_DISMISSED, 	onSettingWinDismissed);
+			GameServices.google.auth.addEventListener(AuthEvents.AUTH, 						onAuthDataRetrived);
 			
 			var btn0:MySprite = createBtn("login");
 			btn0.addEventListener(MouseEvent.CLICK, login);
@@ -237,6 +243,15 @@ package
 					C.log("\n you need to login first!");
 				}
 			}
+			
+			var btn4:MySprite = createBtn("get auth data");
+			btn4.addEventListener(MouseEvent.CLICK, getAuth);
+			_list.add(btn4);
+			
+			function getAuth(e:MouseEvent):void
+			{
+				GameServices.google.auth.getAuth();
+			}
 		}
 		
 		private function onSilentTry(e:AuthEvents):void
@@ -255,13 +270,25 @@ package
 		{
 			C.log("onLoginSuccess");
 			
-			trace("appId = " + GameServices.google.auth.appId);
-			trace("currentAccountName = " + GameServices.google.auth.currentAccountName);
-			trace("sdkVariant = " + GameServices.google.auth.sdkVariant);
+			// some information about current logged in user.
+			trace("displayName = " + 				e.player.displayName);
+			trace("id = " + 						e.player.id);
+			if (e.player.lastLevelUpTimestamp) // it will be null if the player has not leveled up yet!
+			{
+				trace("lastLevelUpTimestamp = " + 	e.player.lastLevelUpTimestamp.toLocaleString());
+			}
+			trace("title = " + 						e.player.title);
+			trace("xp = " + 						e.player.xp);
 			
-			GameServices.google.auth.registerInvitationListener();
-			GameServices.google.auth.registerMatchUpdateListener();
-			GameServices.google.auth.registerQuestUpdateListener();
+			var currLevel:PlayerLevel = e.player.currentLevel;
+			trace("currLevel.levelNumber = " + 		currLevel.levelNumber);
+			trace("currLevel.minXp = " + 			currLevel.minXp);
+			trace("currLevel.maxXp = " + 			currLevel.maxXp);
+			
+			var nextLevel:PlayerLevel = e.player.nextLevel;
+			trace("nextLevel.levelNumber = " + 		nextLevel.levelNumber);
+			trace("nextLevel.minXp = " + 			nextLevel.minXp);
+			trace("nextLevel.maxXp = " + 			nextLevel.maxXp);
 		}
 		
 		private function onLogout(e:AuthEvents):void
@@ -284,7 +311,30 @@ package
 			C.log("onSettingWinDismissed");
 		}
 		
+		private function onAuthDataRetrived(e:AuthEvents):void
+		{
+			C.log("name = " + e.auth.name);
+			C.log("email = " + e.auth.email);
+			C.log("scopes = " + e.auth.scopes);
+			C.log("token = " + e.auth.token);
+			
+			// learn about REST API here: https://developers.google.com/games/services/web/api/
+			GameServices.google.restAPI.call("https://www.googleapis.com/games/v1/players/me", e.auth.token, URLRequestMethod.GET, null);
+			GameServices.google.restAPI.addEventListener(RestAPIEvents.ERROR, onRestAPICallError);
+			GameServices.google.restAPI.addEventListener(RestAPIEvents.COMPLETE, onRestAPICallComplete);
+		}
 		
+		private function onRestAPICallError(e:RestAPIEvents):void
+		{
+			C.log("-------------- onRestAPICallError --------------");
+			C.log("data = " + e.data);
+		}
+		
+		private function onRestAPICallComplete(e:RestAPIEvents):void
+		{
+			C.log("-------------- onRestAPICallComplete --------------");
+			C.log("data = " + e.data);
+		}
 		
 		
 		
