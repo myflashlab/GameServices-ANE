@@ -283,6 +283,13 @@ Embedding the ANE:
 1. Android API 15 or higher
 2. iOS SDK 7.0 or higher
 3. Air SDK 20 or higher
+4. This ANE is dependent on **androidSupport.ane**, **overrideAir.ane**, **googlePlayServices_base.ane**, **googlePlayServices_basement.ane**, **googlePlayServices_drive.ane**, **googlePlayServices_games.ane** and **googlePlayServices_plus.ane** You need to add these ANEs to your project too. [Download them from here:](https://github.com/myflashlab/common-dependencies-ANE)
+5. To compile on iOS, you will need to add the GPG frameworks to your Air SDK.
+  - download GPG_FRAMEWORKS.zip package from our github and extract them on your computer.
+  - you will see some xxxxxx.framework files. just copy them as they are and go to your AdobeAir SDK.
+  - when in your Air SDK, go to "\lib\aot\stub". here you will find all the iOS frameworks provided by Air SDK by default.
+  - paste the GPG frameworks you had downloaded into this folder and you are ready to build your project.
+6. When compiling on Android, make sure you are always compiling in debug or captive mode. shared mode won't work because in the extension we have overwritten some Adobe classes for the extension to work properly.
 
 # Commercial Version
 http://www.myflashlabs.com/product/game-services-air-native-extension/
