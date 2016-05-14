@@ -158,7 +158,7 @@ FOR ANDROID:
 	<uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 	
-	<!- required if you wish to receive the player email address or access token ID
+	<!-- required if you wish to receive the player email address or access token ID -->
 	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
 	
 	<application>
@@ -175,7 +175,7 @@ FOR ANDROID:
 			</intent-filter>
 		</activity>
 		
-		<!- application ID which identifies your game settings in the Google Game Services console (NOTE: leave the initial '\ ' as it is) -->
+		<!-- application ID which identifies your game settings in the Google Game Services console (NOTE: leave the initial '\ ' as it is) -->
 		<meta-data android:name="com.google.android.gms.games.APP_ID" android:value="\ 000000000000" />
 		<meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
 		
