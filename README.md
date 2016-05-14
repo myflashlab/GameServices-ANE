@@ -289,7 +289,8 @@ Embedding the ANE:
   - you will see some xxxxxx.framework files. just copy them as they are and go to your AdobeAir SDK.
   - when in your Air SDK, go to "\lib\aot\stub". here you will find all the iOS frameworks provided by Air SDK by default.
   - paste the GPG frameworks you had downloaded into this folder and you are ready to build your project.
-6. When compiling on Android, make sure you are always compiling in debug or captive mode. shared mode won't work because in the extension we have overwritten some Adobe classes for the extension to work properly.
+6. On the iOS side, you also need to make sure you have included the resources at the top of you package. *next to the main .swf of your project*. [Check here for the resources](https://github.com/myflashlab/GameServices-ANE/tree/master/FD/bin) **GoogleSignIn.bundle** and **gpg.bundle**
+7. When compiling on Android, make sure you are always compiling in debug or captive mode. shared mode won't work because in the extension we have overwritten some Adobe classes for the extension to work properly.
 
 # Commercial Version
 http://www.myflashlabs.com/product/game-services-air-native-extension/
