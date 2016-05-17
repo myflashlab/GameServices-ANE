@@ -302,6 +302,7 @@ http://www.myflashlabs.com/product/game-services-air-native-extension/
 
 # Tutorials
 [How to embed ANEs into **FlashBuilder**, **FlashCC** and **FlashDevelop**](https://www.youtube.com/watch?v=Oubsb_3F3ec&list=PL_mmSjScdnxnSDTMYb1iDX4LemhIJrt1O)  
+[READ THE WIKI SECTION TO LEARN HOW TO SETUP THE GAME SERVICES AND ALSO TO KNOW HOW THINGS WORK WITH THIS ANE](https://github.com/myflashlab/GameServices-ANE/wiki)
 
 # Changelog
 *May 14, 2016 - V1.0.0*
