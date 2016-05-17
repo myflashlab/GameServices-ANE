@@ -302,17 +302,6 @@ http://www.myflashlabs.com/product/game-services-air-native-extension/
 
 # Tutorials
 [How to embed ANEs into **FlashBuilder**, **FlashCC** and **FlashDevelop**](https://www.youtube.com/watch?v=Oubsb_3F3ec&list=PL_mmSjScdnxnSDTMYb1iDX4LemhIJrt1O)  
-How to setup your Game Services settings in Google Play console (for Android) - coming soon  
-How to setup your Game Services settings in Google Play console (for iOS) - coming soon  
-How to manage user authentication - coming soon  
-How to retrive logged-in player's email address and access token - coming soon  
-How to call Games Services REST API - coming soon  
-How game achievements work - coming soon  
-How leaderboards work - coming soon  
-How to save/load game data - coming soon  
-How to manage game quests/events with Game Services - coming soon  
-How to develop a real-time multiplayer game with Game Services - coming soon  
-How to develop a turn-based multiplayer game with Game Services - coming soon  
 
 # Changelog
 *May 14, 2016 - V1.0.0*
