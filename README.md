@@ -212,10 +212,10 @@ FOR iOS:
 				<key>CFBundleTypeRole</key>
 				<string>Editor</string>
 				<key>CFBundleURLName</key>
-				<string>com.doitflash.games.ex.realtime</string>
+				<string>com.site.myapp</string>
 				<key>CFBundleURLSchemes</key>
 				<array>
-					<string>com.doitflash.games.ex.realtime</string>
+					<string>com.site.myapp</string>
 				</array>
 			</dict>
 		</array>
@@ -252,7 +252,7 @@ FOR iOS:
 		<true/>
 		
 		<key>application-identifier</key>
-		<string>XXXXXXXXX.com.doitflash.games.ex.realtime</string>
+		<string>XXXXXXXXX.com.site.myapp</string>
 		
 		<key>com.apple.developer.team-identifier</key>
 		<string>XXXXXXXXX</string>
