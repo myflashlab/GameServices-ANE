@@ -10,7 +10,8 @@ The Google Game Services Air native extension is supported on Android and iOS wi
 * Google Games Services REST API
 
 # asdoc
-[find the latest asdoc for this ANE here.](http://myflashlab.github.io/asdoc/com/myflashlab/air/extensions/gameServices/package-detail.html)
+[find the latest asdoc for this ANE here.](http://myflashlab.github.io/asdoc/com/myflashlab/air/extensions/gameServices/package-detail.html)  
+[How to get started? **read here**](https://github.com/myflashlab/GameServices-ANE/wiki)
 
 **NOTICE**: the demo ANE works only after you hit the "OK" button in the dialog which opens. in your tests make sure that you are NOT calling other ANE methods prior to hitting the "OK" button.
 [Download the ANE](https://github.com/myflashlab/GameServices-ANE/tree/master/FD/lib)
