@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <application xmlns="http://ns.adobe.com/air/application/20.0">
   <id>com.doitflash.games.ex.realtime</id>
-  <versionNumber>1.0.0</versionNumber>
+  <versionNumber>2.0.0</versionNumber>
   <supportedProfiles>mobileDevice</supportedProfiles>
   <filename>exGameServices</filename>
   <name>Game Services ANE</name>
@@ -154,14 +154,15 @@
 	<!-- download the dependency ANEs from https://github.com/myflashlab/common-dependencies-ANE -->
 	<extensionID>com.myflashlab.air.extensions.dependency.overrideAir</extensionID>
 	<extensionID>com.myflashlab.air.extensions.dependency.androidSupport</extensionID>
-    <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.games</extensionID>
-    <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.drive</extensionID>
-    <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.plus</extensionID>
-    <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.base</extensionID>
-    <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.basement</extensionID>
+	<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.games</extensionID>
+	<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.drive</extensionID>
+	<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.plus</extensionID>
+	<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.base</extensionID>
+	<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.basement</extensionID>
+	<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.auth.base</extensionID>
 	
 	<!-- And finally embed the main gameServices ANE -->
-    <extensionID>com.myflashlab.air.extensions.gameServices</extensionID>
+	<extensionID>com.myflashlab.air.extensions.gameServices</extensionID>
 	
   </extensions>
 </application>

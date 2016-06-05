@@ -1,4 +1,4 @@
-# Google Game Services ANE V1.0.0 for Android+iOS
+# Google Game Services ANE V2.0.0 for Android+iOS
 The Google Game Services Air native extension is supported on Android and iOS with 100% identical ActionScript API with a super easy interface so you can focus on your game logic and easily have access to all the cool features of this great library in your games.
 
 **Main Features:**
@@ -275,6 +275,7 @@ Embedding the ANE:
     <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.plus</extensionID>
     <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.base</extensionID>
     <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.basement</extensionID>
+	<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.auth.base</extensionID>
 	
 	<!-- And finally embed the main gameServices ANE -->
     <extensionID>com.myflashlab.air.extensions.gameServices</extensionID>
@@ -287,7 +288,7 @@ Embedding the ANE:
 1. Android API 15 or higher
 2. iOS SDK 7.0 or higher
 3. Air SDK 20 or higher
-4. This ANE is dependent on **androidSupport.ane**, **overrideAir.ane**, **googlePlayServices_base.ane**, **googlePlayServices_basement.ane**, **googlePlayServices_drive.ane**, **googlePlayServices_games.ane** and **googlePlayServices_plus.ane** You need to add these ANEs to your project too. [Download them from here:](https://github.com/myflashlab/common-dependencies-ANE)
+4. This ANE is dependent on **androidSupport.ane**, **overrideAir.ane**, **googlePlayServices_authBase.ane**, **googlePlayServices_base.ane**, **googlePlayServices_basement.ane**, **googlePlayServices_drive.ane**, **googlePlayServices_games.ane** and **googlePlayServices_plus.ane** You need to add these ANEs to your project too. [Download them from here:](https://github.com/myflashlab/common-dependencies-ANE)
 5. To compile on iOS, you will need to add the GPG frameworks to your Air SDK.
   - download GPG_FRAMEWORKS.zip package from our github and extract them on your computer.
   - you will see some xxxxxx.framework files. just copy them as they are and go to your AdobeAir SDK.
@@ -303,9 +304,14 @@ http://www.myflashlabs.com/product/game-services-air-native-extension/
 
 # Tutorials
 [How to embed ANEs into **FlashBuilder**, **FlashCC** and **FlashDevelop**](https://www.youtube.com/watch?v=Oubsb_3F3ec&list=PL_mmSjScdnxnSDTMYb1iDX4LemhIJrt1O)  
-[READ THE WIKI SECTION TO LEARN HOW TO SETUP THE GAME SERVICES AND ALSO TO KNOW HOW THINGS WORK WITH THIS ANE](https://github.com/myflashlab/GameServices-ANE/wiki)
+[How to get started with Games Services?](https://github.com/myflashlab/GameServices-ANE/wiki#get-started-with-games-services)
 
 # Changelog
+*Jun 05, 2016 - V2.0.0*
+* Updated to Game Services V9.0.1
+* All of the depenency ANEs must be updated to Google Play Services V9.0.1. (just replacing the new ANEs with your current ones is enough)
+* New dpenendancy .ane is introduced. *googlePlayServices_authBase.ane* you should add this .ane to your project also. ```<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.auth.base</extensionID>```
+
 *May 14, 2016 - V1.0.0*
 * beginning of the journey!
 

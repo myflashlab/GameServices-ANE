@@ -2,6 +2,7 @@ This ANE is dependent on the following ANEs. You need to add these to your proje
 
 androidSupport.ane
 overrideAir.ane
+googlePlayServices_authBase.ane
 googlePlayServices_base.ane
 googlePlayServices_basement.ane
 googlePlayServices_drive.ane

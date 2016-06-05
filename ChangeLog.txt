@@ -1,4 +1,10 @@
-Google Games Services Adobe Air Native Extension
+Game Services Adobe Air Native Extension
+
+*Jun 05, 2016 - V2.0.0*
+* Updated to Game Services V9.0.1
+* All of the depenency ANEs must be updated to Google Play Services V9.0.1. (just replacing the new ANEs with your current ones is enough)
+* New dpenendancy .ane is introduced. *googlePlayServices_authBase.ane* you should add this .ane to your project also. ```<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.auth.base</extensionID>```
+
 
 *May 14, 2016 - V1.0.0*
 * beginning of the journey!
