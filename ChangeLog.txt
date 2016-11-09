@@ -1,5 +1,8 @@
 Game Services Adobe Air Native Extension
 
+*Nov 09, 2016 - V2.1.0*
+* Optimized for Android manual permissions if you are targeting AIR SDK 24+
+
 *Jun 05, 2016 - V2.0.0*
 * Updated to Game Services V9.0.1
 * All of the depenency ANEs must be updated to Google Play Services V9.0.1. (just replacing the new ANEs with your current ones is enough)

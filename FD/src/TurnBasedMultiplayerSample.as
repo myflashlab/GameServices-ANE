@@ -43,22 +43,19 @@ package
 	import com.myflashlab.air.extensions.gameServices.GameServices;
 	import com.myflashlab.air.extensions.gameServices.google.GamesStatusCodes;
 	import com.myflashlab.air.extensions.gameServices.google.events.AuthEvents;
-	import com.myflashlab.air.extensions.gameServices.google.events.EventEvents;
-	import com.myflashlab.air.extensions.gameServices.google.gameEvents.GameEvent;
+	import com.myflashlab.air.extensions.gameServices.google.events.TurnBasedEvents;
+	import com.myflashlab.air.extensions.gameServices.google.multiplayer.turnBased.TurnBasedMatch;
+	import com.myflashlab.air.extensions.gameServices.google.multiplayer.InvitationUIResult;
 	import com.myflashlab.air.extensions.gameServices.google.player.PlayerLevel;
-	import com.myflashlab.air.extensions.nativePermissions.PermissionCheck;
-	
 	
 	import com.luaye.console.C;
 	
 	/**
 	 * ...
-	 * @author Hadi Tavakoli - 4/11/2016 10:24 AM
+	 * @author Hadi Tavakoli - 4/2/2016 4:20 PM
 	 */
-	public class EventsSample extends Sprite 
+	public class TurnBasedMultiplayerSample extends Sprite 
 	{
-		private var _exPermissions:PermissionCheck = new PermissionCheck();
-		
 		private const BTN_WIDTH:Number = 150;
 		private const BTN_HEIGHT:Number = 60;
 		private const BTN_SPACE:Number = 2;
@@ -67,7 +64,7 @@ package
 		private var _list:List;
 		private var _numRows:int = 1;
 		
-		public function EventsSample():void 
+		public function TurnBasedMultiplayerSample():void 
 		{
 			Multitouch.inputMode = MultitouchInputMode.GESTURE;
 			NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, handleActivate);
@@ -95,7 +92,7 @@ package
 			_txt.multiline = true;
 			_txt.wordWrap = true;
 			_txt.embedFonts = false;
-			_txt.htmlText = "<font face='Arimo' color='#333333' size='20'><b>Game Services ANE V"+GameServices.VERSION+"</b>-\"Game Events\"</font>";
+			_txt.htmlText = "<font face='Arimo' color='#333333' size='20'><b>Game Services ANE V"+GameServices.VERSION+"</b>-\"Turn-based Multiplayer\"</font>";
 			_txt.scaleX = _txt.scaleY = DeviceInfo.dpiScaleMultiplier;
 			this.addChild(_txt);
 			
@@ -110,7 +107,9 @@ package
 			_list.vDirection = Direction.TOP_TO_BOTTOM;
 			_list.space = BTN_SPACE;
 			
-			checkPermissions();
+			// initialize the Game Services and wait for a successful init call before doing anything else
+			GameServices.init(false); // set this to 'true' when you are building for production
+			GameServices.google.auth.addEventListener(AuthEvents.INIT, onInit);
 		}
 		
 		private function onInvoke(e:InvokeEvent):void
@@ -146,7 +145,7 @@ package
 				C.x = 0;
 				C.y = _txt.y + _txt.height + 0;
 				C.width = stage.stageWidth * (1 / DeviceInfo.dpiScaleMultiplier);
-				C.height = 500 * (1 / DeviceInfo.dpiScaleMultiplier);
+				C.height = 300 * (1 / DeviceInfo.dpiScaleMultiplier);
 			}
 			
 			if (_list)
@@ -160,70 +159,6 @@ package
 			{
 				_body.y = stage.stageHeight - _body.height;
 			}
-		}
-		
-		private function checkPermissions():void
-		{
-			checkForStorage();
-			
-			function checkForStorage():void
-			{
-				var permissionState:int = _exPermissions.check(PermissionCheck.SOURCE_STORAGE);
-				
-				if (permissionState == PermissionCheck.PERMISSION_UNKNOWN || permissionState == PermissionCheck.PERMISSION_DENIED)
-				{
-					_exPermissions.request(PermissionCheck.SOURCE_STORAGE, onStorageRequestResult);
-				}
-				else
-				{
-					checkForContacts();
-				}
-			}
-			
-			function onStorageRequestResult($state:int):void
-			{
-				if ($state != PermissionCheck.PERMISSION_GRANTED)
-				{
-					C.log("You did not allow the app the required permissions!");
-				}
-				else
-				{
-					checkForContacts();
-				}
-			}
-			
-			function checkForContacts():void
-			{
-				var permissionState:int = _exPermissions.check(PermissionCheck.SOURCE_CONTACTS);
-				
-				if (permissionState == PermissionCheck.PERMISSION_UNKNOWN || permissionState == PermissionCheck.PERMISSION_DENIED)
-				{
-					_exPermissions.request(PermissionCheck.SOURCE_CONTACTS, onContactsRequestResult);
-				}
-				else
-				{
-					init();
-				}
-			}
-			
-			function onContactsRequestResult($state:int):void
-			{
-				if ($state != PermissionCheck.PERMISSION_GRANTED)
-				{
-					C.log("You did not allow the app the required permissions!");
-				}
-				else
-				{
-					init();
-				}
-			}
-		}
-		
-		private function init():void
-		{
-			// initialize the Game Services and wait for a successful init call before doing anything else
-			GameServices.init(false); // set this to 'true' when you are building for production
-			GameServices.google.auth.addEventListener(AuthEvents.INIT, onInit);
 		}
 		
 		private function onInit(e:AuthEvents):void
@@ -277,7 +212,16 @@ package
 			GameServices.google.auth.addEventListener(AuthEvents.LOGIN, 					onLoginSuccess);
 			GameServices.google.auth.addEventListener(AuthEvents.ERROR, 					onLoginError);
 			
-			GameServices.google.gameEvents.addEventListener(EventEvents.LOAD_RESULT, onGameEventsLoadResult);
+			GameServices.google.multiplayerTurnBased.addEventListener(TurnBasedEvents.MATCHES_WINDOW_DISMISSED, onMatchesWindowDismissed);
+			GameServices.google.multiplayerTurnBased.addEventListener(TurnBasedEvents.MATCH_AVAILABLE, onTurnBasedMatchAvailable);
+			GameServices.google.multiplayerTurnBased.addEventListener(TurnBasedEvents.INVITING_PLAYERS_RESULT, onInvitingPlayersResult);
+			GameServices.google.multiplayerTurnBased.addEventListener(TurnBasedEvents.MATCH_CANCEL, onMatchCancelResult);
+			GameServices.google.multiplayerTurnBased.addEventListener(TurnBasedEvents.MATCH_UPDATE, onMatchUpdateResult);
+			GameServices.google.multiplayerTurnBased.addEventListener(TurnBasedEvents.MATCH_LEAVE, onMatchLeaveResult);
+			GameServices.google.multiplayerTurnBased.addEventListener(TurnBasedEvents.MATCH_LOAD, onMatchLoadResult);
+			GameServices.google.multiplayerTurnBased.addEventListener(TurnBasedEvents.MATCHES_LOAD, onMatchesLoadResult);
+			GameServices.google.multiplayerTurnBased.addEventListener(TurnBasedEvents.MATCH_RECEIVED, onMatcheReceived);
+			GameServices.google.multiplayerTurnBased.addEventListener(TurnBasedEvents.MATCH_REMOVED, onMatcheRemoved);
 			
 			
 			var btn00:MySprite = createBtn("login");
@@ -291,35 +235,53 @@ package
 			
 			// ----------------------------------------------------------------------
 			
-			var btn01:MySprite = createBtn("increment");
-			btn01.addEventListener(MouseEvent.CLICK, increment);
+			var btn01:MySprite = createBtn("showNativeWindowInvitePlayers");
+			btn01.addEventListener(MouseEvent.CLICK, showNativeWindowInvitePlayers);
 			_list.add(btn01);
 			
-			function increment(e:MouseEvent):void
+			function showNativeWindowInvitePlayers(e:MouseEvent):void
 			{
-				GameServices.google.gameEvents.increment("CgkI5Yi1zsAQEAIQCg", 7);
+				GameServices.google.multiplayerTurnBased.showNativeWindowInvitePlayers(1, 3, 0, -1);
 			}
 			
 			// ----------------------------------------------------------------------
 			
-			var btn02:MySprite = createBtn("load");
-			btn02.addEventListener(MouseEvent.CLICK, load);
+			var btn02:MySprite = createBtn("createMatch");
+			btn02.addEventListener(MouseEvent.CLICK, createMatch);
 			_list.add(btn02);
 			
-			function load(e:MouseEvent):void
+			function createMatch(e:MouseEvent):void
 			{
-				GameServices.google.gameEvents.load(true);
+				// listen to TurnBasedEvents.TURN_BASED_MATCH_AVAILABLE for the results
+				GameServices.google.multiplayerTurnBased.createMatch(1, 1, 0, -1, null);
 			}
 			
 			// ----------------------------------------------------------------------
 			
-			var btn03:MySprite = createBtn("load by ID");
-			btn03.addEventListener(MouseEvent.CLICK, loadById);
+			var btn03:MySprite = createBtn("showNativeWindowInbox");
+			btn03.addEventListener(MouseEvent.CLICK, showNativeWindowInbox);
 			_list.add(btn03);
 			
-			function loadById(e:MouseEvent):void
+			function showNativeWindowInbox(e:MouseEvent):void
 			{
-				GameServices.google.gameEvents.loadById("CgkI5Yi1zsAQEAIQCg", true);
+				// listen to TurnBasedEvents.MATCHES_WINDOW_DISMISSED for the results
+				GameServices.google.multiplayerTurnBased.showNativeWindowInbox();
+			}
+			
+			// ----------------------------------------------------------------------
+			
+			var btn05:MySprite = createBtn("load matches");
+			btn05.addEventListener(MouseEvent.CLICK, toLoadMatches);
+			_list.add(btn05);
+			
+			function toLoadMatches(e:MouseEvent):void
+			{
+				// listen to TurnBasedEvents.MATCHES_LOAD for the results
+				GameServices.google.multiplayerTurnBased.loadMatchesByStatus(	GameServices.SORT_ORDER_MOST_RECENT_FIRST, 
+																				TurnBasedMatch.MATCH_TURN_STATUS_INVITED,
+																				TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN,
+																				TurnBasedMatch.MATCH_TURN_STATUS_THEIR_TURN,
+																				TurnBasedMatch.MATCH_TURN_STATUS_COMPLETE)
 			}
 			
 			// ----------------------------------------------------------------------
@@ -341,29 +303,27 @@ package
 		
 		private function onLoginSuccess(e:AuthEvents):void
 		{
-			C.log("------ onLoginSuccess");
+			C.log("onLoginSuccess");
 			
 			// some information about current logged in user.
-			C.log("displayName = " + 				e.player.displayName);
-			C.log("id = " + 						e.player.id);
+			trace("displayName = " + 				e.player.displayName);
+			trace("id = " + 						e.player.id);
 			if (e.player.lastLevelUpTimestamp) // it will be null if the player has not leveled up yet!
 			{
-				C.log("lastLevelUpTimestamp = " + 	e.player.lastLevelUpTimestamp.toLocaleString());
+				trace("lastLevelUpTimestamp = " + 	e.player.lastLevelUpTimestamp.toLocaleString());
 			}
-			C.log("title = " + 						e.player.title);
-			C.log("xp = " + 						e.player.xp);
+			trace("title = " + 						e.player.title);
+			trace("xp = " + 						e.player.xp);
 			
 			var currLevel:PlayerLevel = e.player.currentLevel;
-			C.log("currLevel.levelNumber = " + 		currLevel.levelNumber);
-			C.log("currLevel.minXp = " + 			currLevel.minXp);
-			C.log("currLevel.maxXp = " + 			currLevel.maxXp);
+			trace("currLevel.levelNumber = " + 		currLevel.levelNumber);
+			trace("currLevel.minXp = " + 			currLevel.minXp);
+			trace("currLevel.maxXp = " + 			currLevel.maxXp);
 			
 			var nextLevel:PlayerLevel = e.player.nextLevel;
-			C.log("nextLevel.levelNumber = " + 		nextLevel.levelNumber);
-			C.log("nextLevel.minXp = " + 			nextLevel.minXp);
-			C.log("nextLevel.maxXp = " + 			nextLevel.maxXp);
-			
-			C.log("------");
+			trace("nextLevel.levelNumber = " + 		nextLevel.levelNumber);
+			trace("nextLevel.minXp = " + 			nextLevel.minXp);
+			trace("nextLevel.maxXp = " + 			nextLevel.maxXp);
 		}
 		
 		private function onLoginError(e:AuthEvents):void
@@ -373,35 +333,97 @@ package
 		
 // -----------------------------------------------------------------------------------------------------------------
 		
-		private function onGameEventsLoadResult(e:EventEvents):void
+		private function onMatchesWindowDismissed(e:TurnBasedEvents):void
 		{
-			/**
+			C.log("onMatchesWindowDismissed");
+		}
+		
+		private function onTurnBasedMatchAvailable(e:TurnBasedEvents):void
+		{
+			C.log("onTurnBasedMatchAvailable > status = " + e.status);
 			
-				Possible status codes include:
-				GamesStatusCodes.STATUS_OK 							if data was successfully loaded and is up-to-date. 
-				GamesStatusCodes.STATUS_NETWORK_ERROR_NO_DATA 		if the device was unable to retrieve any data from the network and has no data cached locally.
-				GamesStatusCodes.STATUS_NETWORK_ERROR_STALE_DATA 	if the device was unable to retrieve the latest data from the network, but has some data cached locally.
-				GamesStatusCodes.STATUS_CLIENT_RECONNECT_REQUIRED 	if the client needs to reconnect to the service to access this data.
-				GamesStatusCodes.STATUS_LICENSE_CHECK_FAILED 		if the game is not licensed to the user.
-				GamesStatusCodes.STATUS_INTERNAL_ERROR 				if an unexpected error occurred in the service.
+			if (!e.match) return;
 			
-			*/
-			C.log("--------- onGameEventsLoadResult status = " + e.status);
-			
-			var currEvent:GameEvent;
-			for (var i:int = 0; i < e.gameEvents.length; i++) 
+			traceTheMatch(e.match);
+		}
+		
+		private function onInvitingPlayersResult(e:TurnBasedEvents):void
+		{
+			if (e.invitationResult == GameServices.INVITING_PLAYERS_RESULT_OK)
 			{
-				currEvent = e.gameEvents[i];
-				C.log(" --------------------------- onGameEventsLoadResult");
-				C.log("description = " + currEvent.description);
-				C.log("eventId = " + currEvent.eventId);
-				C.log("isVisible = " + currEvent.isVisible);
-				C.log("name = " + currEvent.name);
-				C.log("value = " + currEvent.value);
-				C.log(" ");
+				C.log("invitation window OK");
+			}
+			else if (e.invitationResult == GameServices.INVITING_PLAYERS_RESULT_CANCELED)
+			{
+				C.log("invitation window canceled");	
+			}
+		}
+		
+		private function onMatchCancelResult(e:TurnBasedEvents):void
+		{
+			C.log("onMatchCancelResult > status = " + e.status);
+			C.log("onMatchCancelResult > matchId = " + e.matchId);
+		}
+		
+		private function onMatchUpdateResult(e:TurnBasedEvents):void
+		{
+			C.log("onMatchUpdateResult > status = " + e.status);
+			
+			onTurnBasedMatchAvailable(e);
+		}
+		
+		private function onMatchLeaveResult(e:TurnBasedEvents):void
+		{
+			C.log("onMatchLeaveResult > status = " + e.status);
+			
+			onTurnBasedMatchAvailable(e);
+		}
+		
+		private function onMatchLoadResult(e:TurnBasedEvents):void
+		{
+			C.log("onMatchLoadResult > status = " + e.status);
+			
+			onTurnBasedMatchAvailable(e);
+		}
+		
+		private function onMatchesLoadResult(e:TurnBasedEvents):void
+		{
+			C.log("on Matches Load Result > status = " + e.status);
+			
+			if (e.completedMatches)
+			{
+				for each(var match1:TurnBasedMatch in e.completedMatches)
+				{
+					traceTheMatch(match1);
+				}
 			}
 			
-			C.log("---------");
+			if (e.myTurnMatches)
+			{
+				for each(var match2:TurnBasedMatch in e.myTurnMatches)
+				{
+					traceTheMatch(match2);
+				}
+			}
+			
+			if (e.theirTurnMatches)
+			{
+				for each(var match3:TurnBasedMatch in e.theirTurnMatches)
+				{
+					traceTheMatch(match3);
+				}
+			}
+		}
+		
+		private function onMatcheReceived(e:TurnBasedEvents):void
+		{
+			C.log("on Matche Received > status = " + e.status);
+			traceTheMatch(e.match);
+		}
+		
+		private function onMatcheRemoved(e:TurnBasedEvents):void
+		{
+			C.log("onMatcheRemoved id = " + e.matchId);
 		}
 		
 		
@@ -423,7 +445,51 @@ package
 		
 		
 		
-		
+		private function traceTheMatch(match:TurnBasedMatch):void
+		{
+			var participant:Participant = match.descriptionParticipant;
+			
+			trace("-------------------- traceTheMatch");
+			trace("availableAutoMatchSlots = " + match.availableAutoMatchSlots);
+			trace("canRematch = " + match.canRematch());
+			trace("creationTimestamp = " + match.creationTimestamp.toLocaleDateString());
+			trace("creatorId = " + match.creatorId);
+			trace("data = " + match.data);
+			trace("description = " + match.description);
+			
+			if (participant)
+			{
+				trace("participant.displayName = " + participant.displayName);
+				trace("participant.isConnectedToRoom = " + participant.isConnectedToRoom);
+				trace("participant.participantId = " + participant.participantId);
+				trace("participant.status = " + participant.status);
+			}
+			
+			trace("descriptionParticipantId = " + match.descriptionParticipantId);
+			trace("getParticipantIds = " + match.getParticipantIds());
+			trace("isLocallyModified = " + match.isLocallyModified);
+			trace("lastUpdatedTimestamp = " + match.lastUpdatedTimestamp.toLocaleDateString());
+			trace("lastUpdaterId = " + match.lastUpdaterId);
+			trace("matchId = " + match.matchId);
+			trace("matchNumber = " + match.matchNumber);
+			trace("pendingParticipantId = " + match.pendingParticipantId);
+			trace("previousMatchData = " + match.previousMatchData);
+			trace("rematchId = " + match.rematchId);
+			trace("status = " + match.status);
+			trace("turnStatus = " + match.turnStatus);
+			trace("variant = " + match.variant);
+			trace("version = " + match.version);
+			
+			trace(" ");
+			if (match.data) trace("\t This is a game that has already started!");
+			else trace("\t This game has just started by the caller user!");
+			trace(" ");
+			
+			
+			var playerId:String = GameServices.google.players.currentPlayer.id;
+			var myParticipantId:String = match.getParticipantId(playerId);
+			trace("myParticipantId = " + myParticipantId);
+		}
 		
 		
 		

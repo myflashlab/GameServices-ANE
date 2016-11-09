@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<application xmlns="http://ns.adobe.com/air/application/20.0">
+<application xmlns="http://ns.adobe.com/air/application/24.0">
   <id>com.doitflash.games.ex.realtime</id>
   <versionNumber>2.0.0</versionNumber>
   <supportedProfiles>mobileDevice</supportedProfiles>
@@ -13,6 +13,9 @@
 	
 	<!-- required if you wish to receive the player email address or access token ID -->
 	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	
+	<!--The new Permission thing on Android works ONLY if you are targetting Android SDK 23 or higher-->
+	<uses-sdk android:targetSdkVersion="23"/>
 	
 	<application>
 		
@@ -163,6 +166,9 @@
 	
 	<!-- And finally embed the main gameServices ANE -->
 	<extensionID>com.myflashlab.air.extensions.gameServices</extensionID>
+	
+	<!-- Required if you are targeting AIR 24+ and have to take care of Permissions mannually -->
+	<extensionID>com.myflashlab.air.extensions.permissionCheck</extensionID>
 	
   </extensions>
 </application>

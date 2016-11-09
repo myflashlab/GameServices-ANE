@@ -29,6 +29,7 @@ package
 	import flash.events.InvokeEvent;
 	import flash.filesystem.File;
 	import flash.utils.ByteArray;
+	import flash.utils.setTimeout;
 	
 	import com.doitflash.text.modules.MySprite;
 	import com.doitflash.starling.utils.list.List;
@@ -43,6 +44,7 @@ package
 	import com.myflashlab.air.extensions.gameServices.google.events.AchievementsEvents;
 	import com.myflashlab.air.extensions.gameServices.google.achievement.Achievement;
 	import com.myflashlab.air.extensions.gameServices.google.player.PlayerLevel;
+	import com.myflashlab.air.extensions.nativePermissions.PermissionCheck;
 	
 	import com.luaye.console.C;
 	
@@ -52,6 +54,8 @@ package
 	 */
 	public class AchievementsSample extends Sprite 
 	{
+		private var _exPermissions:PermissionCheck = new PermissionCheck();
+		
 		private const BTN_WIDTH:Number = 150;
 		private const BTN_HEIGHT:Number = 60;
 		private const BTN_SPACE:Number = 2;
@@ -103,9 +107,7 @@ package
 			_list.vDirection = Direction.TOP_TO_BOTTOM;
 			_list.space = BTN_SPACE;
 			
-			// initialize the Game Services and wait for a successful init call before doing anything else
-			GameServices.init(false); // set this to 'true' when you are building for production
-			GameServices.google.auth.addEventListener(AuthEvents.INIT, onInit);
+			checkPermissions();
 		}
 		
 		private function onInvoke(e:InvokeEvent):void
@@ -155,6 +157,70 @@ package
 			{
 				_body.y = stage.stageHeight - _body.height;
 			}
+		}
+		
+		private function checkPermissions():void
+		{
+			checkForStorage();
+			
+			function checkForStorage():void
+			{
+				var permissionState:int = _exPermissions.check(PermissionCheck.SOURCE_STORAGE);
+				
+				if (permissionState == PermissionCheck.PERMISSION_UNKNOWN || permissionState == PermissionCheck.PERMISSION_DENIED)
+				{
+					_exPermissions.request(PermissionCheck.SOURCE_STORAGE, onStorageRequestResult);
+				}
+				else
+				{
+					checkForContacts();
+				}
+			}
+			
+			function onStorageRequestResult($state:int):void
+			{
+				if ($state != PermissionCheck.PERMISSION_GRANTED)
+				{
+					C.log("You did not allow the app the required permissions!");
+				}
+				else
+				{
+					checkForContacts();
+				}
+			}
+			
+			function checkForContacts():void
+			{
+				var permissionState:int = _exPermissions.check(PermissionCheck.SOURCE_CONTACTS);
+				
+				if (permissionState == PermissionCheck.PERMISSION_UNKNOWN || permissionState == PermissionCheck.PERMISSION_DENIED)
+				{
+					_exPermissions.request(PermissionCheck.SOURCE_CONTACTS, onContactsRequestResult);
+				}
+				else
+				{
+					init();
+				}
+			}
+			
+			function onContactsRequestResult($state:int):void
+			{
+				if ($state != PermissionCheck.PERMISSION_GRANTED)
+				{
+					C.log("You did not allow the app the required permissions!");
+				}
+				else
+				{
+					init();
+				}
+			}
+		}
+		
+		private function init():void
+		{
+			// initialize the Game Services and wait for a successful init call before doing anything else
+			GameServices.init(false); // set this to 'true' when you are building for production
+			GameServices.google.auth.addEventListener(AuthEvents.INIT, onInit);
 		}
 		
 		private function onInit(e:AuthEvents):void

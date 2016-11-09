@@ -1,5 +1,5 @@
-# Google Game Services ANE V2.0.0 for Android+iOS
-The Google Game Services Air native extension is supported on Android and iOS with 100% identical ActionScript API with a super easy interface so you can focus on your game logic and easily have access to all the cool features of this great library in your games.
+# Google Game Services ANE V2.1.0 for Android+iOS
+The Google Game Services AIR native extension is supported on Android and iOS with 100% identical ActionScript API with a super easy interface so you can focus on your game logic and easily have access to all the cool features of this great library in your games.
 
 **Main Features:**
 * Achievements
@@ -16,7 +16,9 @@ The Google Game Services Air native extension is supported on Android and iOS wi
 **NOTICE**: the demo ANE works only after you hit the "OK" button in the dialog which opens. in your tests make sure that you are NOT calling other ANE methods prior to hitting the "OK" button.
 [Download the ANE](https://github.com/myflashlab/GameServices-ANE/tree/master/FD/lib)
 
-# Air Usage
+# AIR Usage
+For the complete AS3 code usage, see the [demo project here](https://github.com/myflashlab/GameServices-ANE/tree/master/FD/src).
+
 ```actionscript
 import com.myflashlab.air.extensions.gameServices.GameServices;
 import com.myflashlab.air.extensions.gameServices.google.events.AuthEvents;
@@ -152,7 +154,7 @@ private function onSettingWinDismissed(e:AuthEvents):void
 }
 ```
 
-# Air .xml manifest
+# AIR .xml manifest
 ```xml
 <!--
 FOR ANDROID:
@@ -280,6 +282,9 @@ Embedding the ANE:
 	<!-- And finally embed the main gameServices ANE -->
     <extensionID>com.myflashlab.air.extensions.gameServices</extensionID>
 	
+	<!-- Required if you are targeting AIR 24+ and have to take care of Permissions mannually -->
+	<extensionID>com.myflashlab.air.extensions.permissionCheck</extensionID>
+	
   </extensions>
 -->
 ```
@@ -287,15 +292,27 @@ Embedding the ANE:
 # Requirements 
 1. Android API 15 or higher
 2. iOS SDK 7.0 or higher
-3. Air SDK 20 or higher
+3. AIR SDK 20 or higher
 4. This ANE is dependent on **androidSupport.ane**, **overrideAir.ane**, **googlePlayServices_authBase.ane**, **googlePlayServices_base.ane**, **googlePlayServices_basement.ane**, **googlePlayServices_drive.ane**, **googlePlayServices_games.ane** and **googlePlayServices_plus.ane** You need to add these ANEs to your project too. [Download them from here:](https://github.com/myflashlab/common-dependencies-ANE)
 5. To compile on iOS, you will need to add the GPG frameworks to your Air SDK.
   - download GPG_FRAMEWORKS.zip package from our github and extract them on your computer.
   - you will see some xxxxxx.framework files. just copy them as they are and go to your AdobeAir SDK.
-  - when in your Air SDK, go to "\lib\aot\stub". here you will find all the iOS frameworks provided by Air SDK by default.
+  - when in your AIR SDK, go to "\lib\aot\stub". here you will find all the iOS frameworks provided by Air SDK by default.
   - paste the GPG frameworks you had downloaded into this folder and you are ready to build your project.
 6. On the iOS side, you also need to make sure you have included the resources at the top of you package. *next to the main .swf of your project*. [Check here for the resources](https://github.com/myflashlab/GameServices-ANE/tree/master/FD/bin) **GoogleSignIn.bundle** and **gpg.bundle**
 7. When compiling on Android, make sure you are always compiling in debug or captive mode. shared mode won't work because in the extension we have overwritten some Adobe classes for the extension to work properly.
+
+# Permissions
+If you are targeting AIR 24 or higher, you need to [take care of the permissions mannually](http://www.myflashlabs.com/adobe-air-app-permissions-android-ios/). Below are the list of Permissions this ANE might require. (Note: *Necessary Permissions* are those that the ANE will NOT work without them and *Optional Permissions* are those which are needed only if you are using some specific features in the ANE.)
+
+Check out the demo project available at this repository to see how we have used our [PermissionCheck ANE](http://www.myflashlabs.com/product/native-access-permission-check-settings-menu-air-native-extension/) to ask for the permissions.
+
+**Necessary Permissions:**  
+none
+
+**Optional Permissions:**  
+1. PermissionCheck.SOURCE_CONTACTS
+2. PermissionCheck.SOURCE_STORAGE
 
 # Commercial Version
 http://www.myflashlabs.com/product/game-services-air-native-extension/
@@ -307,6 +324,9 @@ http://www.myflashlabs.com/product/game-services-air-native-extension/
 [How to get started with Games Services?](https://github.com/myflashlab/GameServices-ANE/wiki#get-started-with-games-services)
 
 # Changelog
+*Nov 09, 2016 - V2.1.0*
+* Optimized for Android manual permissions if you are targeting AIR SDK 24+
+
 *Jun 05, 2016 - V2.0.0*
 * Updated to Game Services V9.0.1
 * All of the depenency ANEs must be updated to Google Play Services V9.0.1. (just replacing the new ANEs with your current ones is enough)
