@@ -311,6 +311,7 @@ Check out the demo project available at this repository to see how we have used 
 none
 
 **Optional Permissions:**  
+
 1. PermissionCheck.SOURCE_CONTACTS
 2. PermissionCheck.SOURCE_STORAGE
 
