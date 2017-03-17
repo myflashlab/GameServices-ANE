@@ -1,4 +1,4 @@
-# Google Game Services ANE V2.1.0 for Android+iOS
+# Google Game Services ANE V2.2.0 for Android+iOS
 The Google Game Services AIR native extension is supported on Android and iOS with 100% identical ActionScript API with a super easy interface so you can focus on your game logic and easily have access to all the cool features of this great library in your games.
 
 **Main Features:**
@@ -291,7 +291,7 @@ Embedding the ANE:
 
 # Requirements 
 1. Android API 15 or higher
-2. iOS SDK 7.0 or higher
+2. iOS SDK 8.0 or higher
 3. AIR SDK 20 or higher
 4. This ANE is dependent on **androidSupport.ane**, **overrideAir.ane**, **googlePlayServices_authBase.ane**, **googlePlayServices_base.ane**, **googlePlayServices_basement.ane**, **googlePlayServices_drive.ane**, **googlePlayServices_games.ane** and **googlePlayServices_plus.ane** You need to add these ANEs to your project too. [Download them from here:](https://github.com/myflashlab/common-dependencies-ANE)
 5. To compile on iOS, you will need to add the GPG frameworks to your Air SDK.
@@ -325,6 +325,12 @@ http://www.myflashlabs.com/product/game-services-air-native-extension/
 [How to get started with Games Services?](https://github.com/myflashlab/GameServices-ANE/wiki#get-started-with-games-services)
 
 # Changelog
+*Mar 18, 2017 - V2.2.0*
+* min iOS version to support this ANE is 8.0
+* Updated SDK to 10.2.0 
+* ```overrideAir.ane``` is now also necessary if you are building for iOS only
+* Known issue, [conflict between gameServices and GoogleSignin](https://github.com/playgameservices/ios-basic-samples/issues/15)
+
 *Nov 09, 2016 - V2.1.0*
 * Optimized for Android manual permissions if you are targeting AIR SDK 24+
 

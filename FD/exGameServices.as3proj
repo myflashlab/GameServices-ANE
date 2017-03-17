@@ -8,7 +8,7 @@
     <movie fps="30" />
     <movie width="480" />
     <movie height="762" />
-    <movie version="21" />
+    <movie version="23" />
     <movie minorVersion="0" />
     <movie platform="AIR Mobile" />
     <movie background="#FFFFFF" />
@@ -59,6 +59,7 @@
     <element path="lib\googlePlayServices.ane" />
     <element path="lib\gameServices.ane" />
     <element path="lib\permissionCheck.ane" />
+    <element path="lib\overrideAir.ane" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
@@ -78,7 +79,7 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="src\AchievementsSample.as" />
+    <compile path="src\RealTimeMultiplayerSample.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>

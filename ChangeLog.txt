@@ -1,5 +1,11 @@
 Game Services Adobe Air Native Extension
 
+*Mar 18, 2017 - V2.2.0*
+* min iOS version to support this ANE is 8.0
+* Updated SDK to 10.2.0 
+* ```overrideAir.ane``` is now also necessary if you are building for iOS only
+* Known issue, [conflict between gameServices and GoogleSignin](https://github.com/playgameservices/ios-basic-samples/issues/15)
+
 *Nov 09, 2016 - V2.1.0*
 * Optimized for Android manual permissions if you are targeting AIR SDK 24+
 
