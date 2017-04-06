@@ -1,6 +1,10 @@
 # Google Game Services ANE V2.2.0 for Android+iOS
 The Google Game Services AIR native extension is supported on Android and iOS with 100% identical ActionScript API with a super easy interface so you can focus on your game logic and easily have access to all the cool features of this great library in your games.
 
+#### NOTICE: Google has discontinued the Game Services Project for iOS. Although it will work until 31st March 2018, it will not be updated or maintained anymore. For more information, read the [official announcement here](https://android-developers.googleblog.com/2017/04/focusing-our-google-play-games-services.html). We will continue maintaining the Android side of this ANE as usual. Considering that the iOS side is discontinued, we [have reduced the ANE price by half](http://www.myflashlabs.com/product/game-services-air-native-extension/). ####
+
+#### So, what are your options if you are using Games Services on the iOS side? Well, the best move you can make based on what Google suggests is to use [Firebase](https://github.com/myflashlab/Firebase-ANE/) SDKs. ####
+
 **Main Features:**
 * Achievements
 * Leaderboards
