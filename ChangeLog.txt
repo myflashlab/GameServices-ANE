@@ -1,5 +1,8 @@
 Game Services Adobe Air Native Extension
 
+*Apr 26, 2017 - V2.2.1*
+* Fixed issue https://github.com/myflashlab/GameServices-ANE/issues/14
+
 *Mar 18, 2017 - V2.2.0*
 * min iOS version to support this ANE is 8.0
 * Updated SDK to 10.2.0 
