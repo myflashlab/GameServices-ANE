@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<application xmlns="http://ns.adobe.com/air/application/27.0">
+  <id>com.doitflash.games.ex.realtime</id>
+  <versionNumber>2.2.3</versionNumber>
+  <supportedProfiles>mobileDevice</supportedProfiles>
+  <filename>exGameServices</filename>
+  <name>Game Services ANE</name>
+  <android>
+    <manifestAdditions><![CDATA[<manifest android:installLocation="auto">
+	
+	<uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	
+	<!-- required if you wish to receive the player email address or access token ID -->
+	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	
+	<!--The new Permission thing on Android works ONLY if you are targetting Android SDK 23 or higher-->
+	<uses-sdk android:targetSdkVersion="23"/>
+	
+	<application>
+		
+		<activity>
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
+		
+		<!-- application ID which identifies your game settings in the Google Game Services console -->
+		<meta-data android:name="com.google.android.gms.games.APP_ID" android:value="\ 0000000000" />
+		<meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+		
+	</application>
+</manifest>]]></manifestAdditions>
+  </android>
+	
+  <iPhone>
+    <!--https://developer.apple.com/library/ios/documentation/general/reference/infoplistkeyreference/Articles/iPhoneOSKeys.html-->
+    <!--http://help.adobe.com/en_US/air/build/WSfffb011ac560372f7e64a7f12cd2dd1867-8000.html-->
+	  
+	 <InfoAdditions><![CDATA[
+	
+		<!--iOS 8.0 or higher can support this ANE-->
+		<key>MinimumOSVersion</key>
+		<string>8.0</string>
+		 
+		<key>UIPrerenderedIcon</key>
+		<true/>
+		
+		<key>com.google.android.gms.games.APP_ID</key>
+		<string>0000000000-tu362slbd2dhh89e5906qbpuk4pracs3.apps.googleusercontent.com</string>
+		 
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLName</key>
+				<string>myflashlabs_GPG_ane_clientID</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>com.googleusercontent.apps.0000000000-tu362slbd2dhh89e5906qbpuk4pracs3</string>
+				</array>
+			</dict>
+			<dict>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLName</key>
+				<string>com.doitflash.games.ex.realtime</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>com.doitflash.games.ex.realtime</string>
+				</array>
+			</dict>
+		</array>
+			
+		<key>UIStatusBarStyle</key>
+		<string>UIStatusBarStyleBlackOpaque</string>
+			
+		<key>UIRequiresPersistentWiFi</key>
+		<string>NO</string>
+	
+		<key>UIDeviceFamily</key>
+		<array>
+			<string>1</string>
+			<string>2</string>
+		</array>
+		
+		<key>UIBackgroundModes</key>
+		<array>
+			<string>fetch</string>
+			<string>remote-notification</string>
+		</array>
+		
+	]]></InfoAdditions>
+    <requestedDisplayResolution>high</requestedDisplayResolution>
+	  
+	<Entitlements>
+	<![CDATA[
+	
+		<key>keychain-access-groups</key>
+		<array>
+			<string>23AX2DU1RW.*</string>		
+		</array>
+		
+		<key>get-task-allow</key>
+		<!-- set to 'false' for adHoc or production builds -->
+		<true/>
+		
+		<key>application-identifier</key>
+		<string>23AX2DU1RW.com.doitflash.games.ex.realtime</string>
+		
+		<key>com.apple.developer.team-identifier</key>
+		<string>23AX2DU1RW</string>
+		
+		<key>aps-environment</key>
+		<!-- set to 'production' for adHoc or production builds -->
+		<string>development</string>
+		
+	]]></Entitlements>
+	  
+	  
+  </iPhone>
+	
+	
+  <initialWindow>
+    <title>exGameServices</title>
+    <content>ex.swf</content>
+    <visible>true</visible>
+    <fullScreen>true</fullScreen>
+    <autoOrients>true</autoOrients>
+    <!--<aspectRatio>portrait</aspectRatio>-->
+    <renderMode>gpu</renderMode>
+    <!--<depthAndStencil>true</depthAndStencil>-->
+    <!-- required for 3D -->
+    <systemChrome>standard</systemChrome>
+  </initialWindow>
+  <icon>
+        <image16x16>icons/icon_16.png</image16x16>
+        <image29x29>icons/icon_29.png</image29x29>
+        <image32x32>icons/icon_32.png</image32x32>
+        <image36x36>icons/icon_36.png</image36x36>
+        <image40x40>icons/icon_40.png</image40x40>
+        <image48x48>icons/icon_48.png</image48x48>
+        <image50x50>icons/icon_50.png</image50x50>
+        <image57x57>icons/icon_57.png</image57x57>
+        <image58x58>icons/icon_58.png</image58x58>
+        <image60x60>icons/icon_60.png</image60x60>
+        <image72x72>icons/icon_72.png</image72x72>
+        <image76x76>icons/icon_76.png</image76x76>
+        <image80x80>icons/icon_80.png</image80x80>
+        <image96x96>icons/icon_96.png</image96x96>
+        <image100x100>icons/icon_100.png</image100x100>
+        <image114x114>icons/icon_114.png</image114x114>
+        <image120x120>icons/icon_120.png</image120x120>
+        <image128x128>icons/icon_128.png</image128x128>
+        <image144x144>icons/icon_144.png</image144x144>
+        <image152x152>icons/icon_152.png</image152x152>
+        <image512x512>icons/icon_512.png</image512x512>
+        <image1024x1024>icons/icon_1024.png</image1024x1024>
+    </icon>
+  <extensions>
+	
+	<!-- download the dependency ANEs from https://github.com/myflashlab/common-dependencies-ANE -->
+	<extensionID>com.myflashlab.air.extensions.dependency.overrideAir</extensionID>
+	<extensionID>com.myflashlab.air.extensions.dependency.androidSupport</extensionID>
+	<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.games</extensionID>
+	<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.drive</extensionID>
+	<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.plus</extensionID>
+	<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.base</extensionID>
+	<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.basement</extensionID>
+	<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.auth.base</extensionID>
+	
+	<!-- And finally embed the main gameServices ANE -->
+	<extensionID>com.myflashlab.air.extensions.gameServices</extensionID>
+	
+	<!-- Required if you are targeting AIR 24+ and have to take care of Permissions mannually -->
+	<extensionID>com.myflashlab.air.extensions.permissionCheck</extensionID>
+	
+  </extensions>
+</application>

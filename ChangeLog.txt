@@ -1,5 +1,8 @@
 Game Services Adobe Air Native Extension
 
+*Dec 15, 2017 - V2.2.3*
+* Optimized for [ANE-LAB software](https://github.com/myflashlab/ANE-LAB).
+
 *Apr 26, 2017 - V2.2.1*
 * Fixed issue https://github.com/myflashlab/GameServices-ANE/issues/14
 
