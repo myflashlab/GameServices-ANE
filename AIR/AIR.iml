@@ -2,7 +2,7 @@
 <module type="Flex" version="4">
   <component name="FlexBuildConfigurationManager" active="AIR">
     <configurations>
-      <configuration name="AIR" target-platform="Mobile" pure-as="true" main-class="LoginSample" output-file="Main.swf" output-folder="$MODULE_DIR$/out/production/AIR">
+      <configuration name="AIR" target-platform="Mobile" pure-as="true" main-class="Main" output-file="Main.swf" output-folder="$MODULE_DIR$/out/production/AIR">
         <dependencies target-player="25.0">
           <entries>
             <entry library-id="1c696a4b-410d-456b-b23a-cc85708819de">
@@ -24,7 +24,7 @@
           </files-to-package>
           <AirSigningOptions keystore-path="$MODULE_DIR$/cert/myflashlabs.p12" use-temp-certificate="false" />
         </packaging-android>
-        <packaging-ios enabled="true" use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/Main-app.xml" package-file-name="Main">
+        <packaging-ios use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/Main-app.xml" package-file-name="Main">
           <files-to-package>
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/icons/icons" path-in-package="icons" />
             <FilePathAndPathInPackage file-path="$MODULE_DIR$/icons/Default-375w-667h@2x~iphone.png" path-in-package="Default-375w-667h@2x~iphone.png" />

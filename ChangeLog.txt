@@ -1,5 +1,11 @@
 Game Services Adobe Air Native Extension
 
+*Mar 22, 2018 - V4.0.0*
+* Updated to the latest SDK version. iOS support is removed by Google and AS3 usage has changed dramatically.
+* Google Authentication now happens in the [GoogleSignin ANE](https://github.com/myflashlab/GoogleSignIn-ANE). You need to have that ANE installed first.
+* [asDoc](http://myflashlab.github.io/asdoc/com/myflashlab/air/extensions/googleGames/package-detail.html) packages have been changed.
+* Start reading the [WIKI pages](https://github.com/myflashlab/GameServices-ANE/wiki) to get familiar with the new API.
+
 *Dec 15, 2017 - V2.2.3*
 * Optimized for [ANE-LAB software](https://github.com/myflashlab/ANE-LAB).
 

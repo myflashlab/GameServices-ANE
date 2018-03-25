@@ -1,1 +1,0 @@
-"GoogleSignIn.bundle" and "gpg.bundle" are required for the iOS version only. and they must be placed at the root of your package next to the main .swf file of your project.

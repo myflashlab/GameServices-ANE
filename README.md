@@ -1,335 +1,149 @@
-# Google Game Services ANE V2.2.3 for Android+iOS
-The Google Game Services AIR native extension is supported on Android and iOS with 100% identical ActionScript API with a super easy interface so you can focus on your game logic and easily have access to all the cool features of this great library in your games.
+# Google Game Services ANE V4.0.0 for Android
+The Google Game Services AIR native extension allows you to focus on your game logic and easily have access to all the cool features of this great SDK in your AIR games.
 
----------------------------
-#### NOTICE: Google has discontinued the Game Services Project for iOS. Although it will work until 31st March 2018, it will not be updated or maintained anymore. For more information, read the [official announcement here](https://android-developers.googleblog.com/2017/04/focusing-our-google-play-games-services.html). We will continue maintaining the Android side of this ANE as usual. Considering that the iOS side is discontinued, we [have reduced the ANE price by half](http://www.myflashlabs.com/product/game-services-air-native-extension/). ####
-----------------------------
-
-#### So, what are your options if you are using Games Services on the iOS side? Well, the best move you can make based on what Google suggests is to use [Firebase](https://github.com/myflashlab/Firebase-ANE/) SDKs. ####
+**NOTICE: Google has discontinued the [Game Services Project for iOS](https://android-developers.googleblog.com/2017/04/focusing-our-google-play-games-services.html). On iOS, you may consider using [Firebase](https://github.com/myflashlab/Firebase-ANE/)**
 
 **Main Features:**
 * Achievements
 * Leaderboards
 * Real-time Multiplayer
-* Game Events and Quests
 * Cloud Game Saving (Game Snapshots)
-* Google Games Services REST API
 
 # asdoc
-[find the latest asdoc for this ANE here.](http://myflashlab.github.io/asdoc/com/myflashlab/air/extensions/gameServices/package-detail.html)  
-[How to get started? **read here**](https://github.com/myflashlab/GameServices-ANE/wiki)
-
-[Download demo ANE](https://github.com/myflashlab/GameServices-ANE/tree/master/AIR/lib)
+[find the latest asdoc for this ANE here.](http://myflashlab.github.io/asdoc/com/myflashlab/air/extensions/googleGames/package-detail.html)  
+[How to get started? **read here**](https://github.com/myflashlab/GameServices-ANE/wiki)  
+[Download demo ANE](https://github.com/myflashlab/GameServices-ANE/tree/master/AIR/lib)  
 
 # AIR Usage
 For the complete AS3 code usage, see the [demo project here](https://github.com/myflashlab/GameServices-ANE/tree/master/AIR/src).
 
 ```actionscript
-import com.myflashlab.air.extensions.gameServices.GameServices;
-import com.myflashlab.air.extensions.gameServices.google.events.AuthEvents;
-import com.myflashlab.air.extensions.gameServices.google.player.PlayerLevel;
+/*
+	Before initializing the GameServices ANE, you need to login users using the GoogleSignin ANE
+	https://github.com/myflashlab/GoogleSignIn-ANE
+*/
 
-// initialize the Game Services and wait for a successful init call before doing anything else
-GameServices.init(false); // set this to 'true' when you are building for production
-GameServices.google.auth.addEventListener(AuthEvents.INIT, onInit);
+// depending on your app design, you must customize the Signin Options
+// If you want GoogleGames signin only, do like below:
+var options:GSignInOptions = new GSignInOptions();
+options.gamesSignIn = true; // set to true if you are working with Google Games Services ANE.
 
-private function onInit(e:AuthEvents):void
+// you don't want to bother users with a permission page, right? so set these to false 
+// and don't ask for extra access scopes.
+options.requestId = false;
+options.requestProfile = false;
+options.requestEmail = false;
+
+// IMPORTANT: if you are not using Game Save Snapshots, you would not need GScopes.DRIVE_APPFOLDER
+options.requestScopes = [
+	"https://www.googleapis.com/auth/games", // must be set for games
+	GScopes.DRIVE_APPFOLDER // optional and only needed if you are using Game Save Snapshots
+];
+
+// then pass the options to the initialization method of the GSignIn ANE
+GSignIn.init(options);
+
+// Finally, add listeners
+GSignIn.listener.addEventListener(GSignInEvents.SILENT_SIGNIN_SUCCESS, onSilentSigninSuccess);
+GSignIn.listener.addEventListener(GSignInEvents.SILENT_SIGNIN_FAILURE, onSilentSigninFailure);
+GSignIn.listener.addEventListener(GSignInEvents.SIGNIN_SUCCESS, onSigninSuccess);
+GSignIn.listener.addEventListener(GSignInEvents.SIGNIN_FAILURE, onSigninFailure);
+GSignIn.listener.addEventListener(GSignInEvents.SIGNOUT_SUCCESS, onSignoutSuccess);
+GSignIn.listener.addEventListener(GSignInEvents.SIGNOUT_FAILURE, onSignoutFailure);
+
+// check if user is already loggedin or not
+var account:GAccount = GSignIn.signedInAccount;
+if(account)
 {
-	var result:String;
-	
-	switch (e.status) // status code indicating whether Game Services can run in your app or not. It can be one of following results:
-	{
-		case GameServices.SUCCESS:
-			
-			result = "GameServices.SUCCESS";
-			onSuccessfullInit();
-			onResize();
-			
-		break;
-		case GameServices.SERVICE_MISSING:
-			
-			result = "GameServices.SERVICE_MISSING";
-			
-		break;
-		case GameServices.SERVICE_UPDATING:
-			
-			result = "GameServices.SERVICE_UPDATING";
-		
-		break;
-		case GameServices.SERVICE_VERSION_UPDATE_REQUIRED:
-			
-			result = "GameServices.SERVICE_VERSION_UPDATE_REQUIRED";
-			
-		break;
-		case GameServices.SERVICE_DISABLED:
-			
-			result = "GameServices.SERVICE_DISABLED";
-			
-		break;
-		case GameServices.SERVICE_INVALID:
-			
-			result = "GameServices.SERVICE_INVALID";
-			
-		break;
-		default:
-	}
-	
-	trace("onInit result = " + result);
+	initGames(); // here, you will initialize the GameServices ANE
+}
+else
+{
+	// You should first check if user can signin silently, if she can't, use the signin() method
+	GSignIn.silentSignIn();
 }
 
-private function onSuccessfullInit():void
+function onSigninSuccess(e:GSignInEvents):void
 {
-	// add required listeners for the authentication process of the Game Services ANE
-	GameServices.google.auth.addEventListener(AuthEvents.TRYING_SILENT_LOGIN, 	onSilentTry);
-	GameServices.google.auth.addEventListener(AuthEvents.LOGIN, 			onLoginSuccess);
-	GameServices.google.auth.addEventListener(AuthEvents.LOGOUT, 			onLogout);
-	GameServices.google.auth.addEventListener(AuthEvents.ERROR, 			onLoginError);
-	GameServices.google.auth.addEventListener(AuthEvents.CANCELED, 			onCanceled);
-	GameServices.google.auth.addEventListener(AuthEvents.SETTING_WINDOW_DISMISSED, 	onSettingWinDismissed);
-	
-	// Do you stuff here after you are sure that Game Services is supported and can be used in your app.
+	trace("e.account.scopes: "+ e.account.scopes);
+	initGames();
 }
 
-private function onSilentTry(e:AuthEvents):void
+function onSilentSigninSuccess(e:GSignInEvents):void
 {
-	trace("canDoSilentLogin = ", e.canDoSilentLogin);
-	trace("If silent try is \"false\", it means that you have to login the user yourself using the \"GameServices.login();\" method.");
-	trace("But if it's \"true\", it means that the user had signed in before and he will be signed in again silently shortly. and you have to wait for the \"AuthEvents.LOGIN\" event.");
-	
-	if (e.canDoSilentLogin)
-	{
-		trace("connecting to Game Services, please wait...");
-	}
-	else
-	{
-		// You should always let users click the "login" button themselves! This is just a sample though and we are doing it programmatically
-		GameServices.google.auth.login();
-	}
-}
-
-private function onLoginSuccess(e:AuthEvents):void
-{
-	trace("onLoginSuccess");
-	
-	// some information about current logged in user.
-	trace("displayName = " + 				e.player.displayName);
-	trace("id = " + 						e.player.id);
-	if (e.player.lastLevelUpTimestamp) // it will be null if the player has not leveled up yet!
-	{
-		trace("lastLevelUpTimestamp = " + 	e.player.lastLevelUpTimestamp.toLocaleString());
-	}
-	trace("title = " + 						e.player.title);
-	trace("xp = " + 						e.player.xp);
-	
-	var currLevel:PlayerLevel = e.player.currentLevel;
-	trace("currLevel.levelNumber = " + 		currLevel.levelNumber);
-	trace("currLevel.minXp = " + 			currLevel.minXp);
-	trace("currLevel.maxXp = " + 			currLevel.maxXp);
-	
-	var nextLevel:PlayerLevel = e.player.nextLevel;
-	trace("nextLevel.levelNumber = " + 		nextLevel.levelNumber);
-	trace("nextLevel.minXp = " + 			nextLevel.minXp);
-	trace("nextLevel.maxXp = " + 			nextLevel.maxXp);
-	
-	/*
-		When you are logged in, you can use all the other APIs.
-		Please refer to the tutorials section to know how you should 
-		use other features of the Game Services ANE.
-	*/
-}
-
-private function onLogout(e:AuthEvents):void
-{
-	trace("onLogout");
-}
-
-private function onLoginError(e:AuthEvents):void
-{
-	trace("onLoginError: ", e.msg);
-}
-
-private function onCanceled(e:AuthEvents):void
-{
-	trace("onCanceled: ", e.msg);
-}
-
-private function onSettingWinDismissed(e:AuthEvents):void
-{
-	trace("onSettingWinDismissed");
+	initGames();
 }
 ```
+When user signed in successfully, call ```Games.init();``` to initialize the GameServices ANE. And then listen to ```GamesEvents.CONNECT_SUCCESS``` events before calling other methods of this ANE. Make sure you are reading [the Wiki](https://github.com/myflashlab/GameServices-ANE/wiki) to learn how you should use different features of this ANE.
 
 # AIR .xml manifest
 ```xml
 <!--
-FOR ANDROID:
+	First make sure you have setup the GoogleSignin ANE and you have already added
+	the required settings to the manifest.
 -->
-<manifest android:installLocation="auto">
-	
-	<uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	
-	<!-- required if you wish to receive the player email address or access token ID -->
-	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
-	
-	<application>
-		
-		<activity>
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW" />
-				<category android:name="android.intent.category.BROWSABLE" />
-				<category android:name="android.intent.category.DEFAULT" />
-			</intent-filter>
-		</activity>
-		
-		<!-- application ID which identifies your game settings in the Google Game Services console (NOTE: leave the initial '\ ' as it is) -->
-		<meta-data android:name="com.google.android.gms.games.APP_ID" android:value="\ 000000000000" />
-		<meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
-		
-	</application>
-</manifest>
-<!--
-FOR iOS:
--->
-	<InfoAdditions>
-		<!--iOS 8.0 or higher can support this ANE-->
-		<key>MinimumOSVersion</key>
-		<string>8.0</string>
-		
-		<!- application ID which identifies your game settings in the Google Game Services console -->
-		<key>com.google.android.gms.games.APP_ID</key>
-		<string>000000000000-tu362slbd0dhh89e5906qbpuk6pracs3.apps.googleusercontent.com</string>
-		 
-		<key>CFBundleURLTypes</key>
-		<array>
-			<dict>
-				<key>CFBundleTypeRole</key>
-				<string>Editor</string>
-				<key>CFBundleURLName</key>
-				<string>myflashlabs_GPG_ane_clientID</string>
-				<key>CFBundleURLSchemes</key>
-				<array>
-					<string>com.googleusercontent.apps.000000000000-tu362slbd0dhh89e5906qbpuk6pracs3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>CFBundleTypeRole</key>
-				<string>Editor</string>
-				<key>CFBundleURLName</key>
-				<string>com.site.myapp</string>
-				<key>CFBundleURLSchemes</key>
-				<array>
-					<string>com.site.myapp</string>
-				</array>
-			</dict>
-		</array>
-			
-		<key>UIStatusBarStyle</key>
-		<string>UIStatusBarStyleBlackOpaque</string>
-		
-		<key>UIRequiresPersistentWiFi</key>
-		<string>NO</string>
-		
-		<key>UIDeviceFamily</key>
-		<array>
-			<string>1</string>
-			<string>2</string>
-		</array>
-		
-		<key>UIBackgroundModes</key>
-		<array>
-			<string>fetch</string>
-			<string>remote-notification</string>
-		</array>
-	</InfoAdditions>
-	
-	<requestedDisplayResolution>high</requestedDisplayResolution>
-	
-	<Entitlements>
-		<key>keychain-access-groups</key>
-		<array>
-			<string>XXXXXXXXX.*</string>		
-		</array>
-		
-		<key>get-task-allow</key>
-		<!-- set to 'false' for adHoc or production builds -->
-		<true/>
-		
-		<key>application-identifier</key>
-		<string>XXXXXXXXX.com.site.myapp</string>
-		
-		<key>com.apple.developer.team-identifier</key>
-		<string>XXXXXXXXX</string>
-		
-		<key>aps-environment</key>
-		<!-- set to 'production' for adHoc or production builds -->
-		<string>development</string> 
-	<Entitlements>
+
+
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+<!-- Optional. Add this if you are using the "Games.metadata.getCurrentAccountName" method -->
+<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+<!-- application ID which identifies your game settings in the Google Game Services console -->
+<meta-data android:name="com.google.android.gms.games.APP_ID" android:value="\ 00000000000"/>
+
+
+
 <!--
 Embedding the ANE:
 -->
   <extensions>
-	
-	<!-- download the dependency ANEs from https://github.com/myflashlab/common-dependencies-ANE -->
-	<extensionID>com.myflashlab.air.extensions.dependency.overrideAir</extensionID>
-	<extensionID>com.myflashlab.air.extensions.dependency.androidSupport</extensionID>
-	<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.games</extensionID>
-	<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.drive</extensionID>
-	<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.plus</extensionID>
-	<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.base</extensionID>
-	<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.basement</extensionID>
-	<extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.auth.base</extensionID>
-	
-	<!-- And finally embed the main gameServices ANE -->
-	<extensionID>com.myflashlab.air.extensions.gameServices</extensionID>
-	
-	<!-- Required if you are targeting AIR 24+ and have to take care of Permissions mannually -->
-	<extensionID>com.myflashlab.air.extensions.permissionCheck</extensionID>
-	
-  </extensions>
+
+        <!-- Embed the GSignIn ANE which is a must for the Games ANE to work -->
+        <extensionID>com.myflashlab.air.extensions.google.signin</extensionID>
+
+        <!-- Dependencies required by the GSignIn ANE -->
+        <extensionID>com.myflashlab.air.extensions.dependency.overrideAir</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.androidSupport</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.base</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.basement</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.auth.base</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.auth</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.tasks</extensionID>
+
+        <!-- gameServices ANE -->
+        <extensionID>com.myflashlab.air.extensions.gameServices</extensionID>
+
+        <!-- Dependencies required by the gameServices ANE -->
+        <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.games</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.drive</extensionID>
+
+    </extensions>
 -->
 ```
 
 # Requirements 
 1. Android API 15 or higher
-2. iOS SDK 8.0 or higher
 3. AIR SDK 27 or higher
-4. This ANE is dependent on **androidSupport.ane**, **overrideAir.ane**, **googlePlayServices_authBase.ane**, **googlePlayServices_base.ane**, **googlePlayServices_basement.ane**, **googlePlayServices_drive.ane**, **googlePlayServices_games.ane** and **googlePlayServices_plus.ane** You need to add these ANEs to your project too. [Download them from here:](https://github.com/myflashlab/common-dependencies-ANE)
-5. To compile on iOS, you will need to add the GPG frameworks to your Air SDK.
-  - download GPG_FRAMEWORKS.zip package from our github and extract them on your computer.
-  - you will see some xxxxxx.framework files. just copy them as they are and go to your AdobeAir SDK.
-  - when in your AIR SDK, go to "\lib\aot\stub". here you will find all the iOS frameworks provided by Air SDK by default.
-  - paste the GPG frameworks you had downloaded into this folder and you are ready to build your project.
-6. On the iOS side, you also need to make sure you have included the resources at the top of you package. *next to the main .swf of your project*. [Check here for the resources](https://github.com/myflashlab/GameServices-ANE/tree/master/AIR/bin) **GoogleSignIn.bundle** and **gpg.bundle**
-7. When compiling on Android, make sure you are always compiling in debug or captive mode. shared mode won't work because in the extension we have overwritten some Adobe classes for the extension to work properly.
-
-# Permissions
-If you are targeting AIR 24 or higher, you need to [take care of the permissions mannually](http://www.myflashlabs.com/adobe-air-app-permissions-android-ios/). Below are the list of Permissions this ANE might require. (Note: *Necessary Permissions* are those that the ANE will NOT work without them and *Optional Permissions* are those which are needed only if you are using some specific features in the ANE.)
-
-Check out the demo project available at this repository to see how we have used our [PermissionCheck ANE](http://www.myflashlabs.com/product/native-access-permission-check-settings-menu-air-native-extension/) to ask for the permissions.
-
-**Necessary Permissions:**  
-none
-
-**Optional Permissions:**  
-
-1. PermissionCheck.SOURCE_CONTACTS
-2. PermissionCheck.SOURCE_STORAGE
+4. This ANE is dependent on [**googleSignIn.ane**](https://github.com/myflashlab/GoogleSignIn-ANE/blob/master/AIR/lib/googleSignIn.ane), [**googlePlayServices_drive.ane**](https://github.com/myflashlab/common-dependencies-ANE/blob/master/googlePlayServices/googlePlayServices_drive.ane) and [**googlePlayServices_games.ane**](https://github.com/myflashlab/common-dependencies-ANE/blob/master/googlePlayServices/googlePlayServices_games.ane). You need to add these ANEs to your project too.
 
 # Commercial Version
 http://www.myflashlabs.com/product/game-services-air-native-extension/
 
-![Game Services ANE](http://www.myflashlabs.com/wp-content/uploads/2016/04/product_adobe-air-ane-extension-game-services-1-595x738.jpg)
+![Game Services ANE](https://www.myflashlabs.com/wp-content/uploads/2016/04/product_adobe-air-ane-extension-game-services-595x738.jpg)
 
 # Tutorials
 [How to embed ANEs into **FlashBuilder**, **FlashCC** and **FlashDevelop**](https://www.youtube.com/watch?v=Oubsb_3F3ec&list=PL_mmSjScdnxnSDTMYb1iDX4LemhIJrt1O)  
 [How to get started with Games Services?](https://github.com/myflashlab/GameServices-ANE/wiki#get-started-with-games-services)
 
 # Changelog
+*Mar 22, 2018 - V4.0.0*
+* Updated to the latest SDK version. iOS support is removed by Google and AS3 usage has changed dramatically.
+* Google Authentication now happens in the [GoogleSignin ANE](https://github.com/myflashlab/GoogleSignIn-ANE). You need to have that ANE installed first.
+* [asDoc](http://myflashlab.github.io/asdoc/com/myflashlab/air/extensions/googleGames/package-detail.html) packages have been changed.
+* Start reading the [WIKI pages](https://github.com/myflashlab/GameServices-ANE/wiki) to get familiar with the new API.
+
 *Dec 15, 2017 - V2.2.3*
 * Optimized for [ANE-LAB software](https://github.com/myflashlab/ANE-LAB).
 
