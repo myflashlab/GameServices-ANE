@@ -1,4 +1,4 @@
-# Google Game Services ANE V4.0.0 for Android
+# Google Game Services ANE V4.1.0 for Android
 The Google Game Services AIR native extension allows you to focus on your game logic and easily have access to all the cool features of this great SDK in your AIR games.
 
 **NOTICE: Google has discontinued the [Game Services Project for iOS](https://android-developers.googleblog.com/2017/04/focusing-our-google-play-games-services.html). On iOS, you may consider using [Firebase](https://github.com/myflashlab/Firebase-ANE/)**
@@ -105,11 +105,12 @@ Embedding the ANE:
 
         <!-- Dependencies required by the GSignIn ANE -->
         <extensionID>com.myflashlab.air.extensions.dependency.overrideAir</extensionID>
-        <extensionID>com.myflashlab.air.extensions.dependency.androidSupport</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.androidSupport.arch</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.androidSupport.core</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.androidSupport.v4</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.auth</extensionID>
         <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.base</extensionID>
         <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.basement</extensionID>
-        <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.auth.base</extensionID>
-        <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.auth</extensionID>
         <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.tasks</extensionID>
 
         <!-- gameServices ANE -->
@@ -124,9 +125,9 @@ Embedding the ANE:
 ```
 
 # Requirements 
-1. Android API 15 or higher
-3. AIR SDK 27 or higher
-4. This ANE is dependent on [**googleSignIn.ane**](https://github.com/myflashlab/GoogleSignIn-ANE/blob/master/AIR/lib/googleSignIn.ane), [**googlePlayServices_drive.ane**](https://github.com/myflashlab/common-dependencies-ANE/blob/master/googlePlayServices/googlePlayServices_drive.ane) and [**googlePlayServices_games.ane**](https://github.com/myflashlab/common-dependencies-ANE/blob/master/googlePlayServices/googlePlayServices_games.ane). You need to add these ANEs to your project too.
+1. Android API 15+
+2. AIR SDK 30+
+3. implement [GoogleSignIn](https://www.myflashlabs.com/product/google-signin-ane-adobe-air-native-extension/) in your app first.
 
 # Commercial Version
 http://www.myflashlabs.com/product/game-services-air-native-extension/
@@ -138,6 +139,10 @@ http://www.myflashlabs.com/product/game-services-air-native-extension/
 [How to get started with Games Services?](https://github.com/myflashlab/GameServices-ANE/wiki#get-started-with-games-services)
 
 # Changelog
+*Sep 20, 2018 - V4.1.0*
+* Updated to dependencies V15.0.1
+* ANE still depends on GoogleSignIn ANE but notice that we have updated GoogleSignin ANE also to V1.3.0 and have removed AndroidSupport ANE and have replaced it with smaller ones.
+
 *Mar 22, 2018 - V4.0.0*
 * Updated to the latest SDK version. iOS support is removed by Google and AS3 usage has changed dramatically.
 * Google Authentication now happens in the [GoogleSignin ANE](https://github.com/myflashlab/GoogleSignIn-ANE). You need to have that ANE installed first.

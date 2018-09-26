@@ -1,5 +1,9 @@
 Game Services Adobe Air Native Extension
 
+*Sep 20, 2018 - V4.1.0*
+* Updated to dependencies V15.0.1
+* ANE still depends on GoogleSignIn ANE but notice that we have updated GoogleSignin ANE also to V1.3.0 and have removed AndroidSupport ANE and have replaced it with smaller ones.
+
 *Mar 22, 2018 - V4.0.0*
 * Updated to the latest SDK version. iOS support is removed by Google and AS3 usage has changed dramatically.
 * Google Authentication now happens in the [GoogleSignin ANE](https://github.com/myflashlab/GoogleSignIn-ANE). You need to have that ANE installed first.
