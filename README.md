@@ -1,4 +1,4 @@
-# Google Game Services ANE V4.1.0 for Android
+# Google Game Services ANE V4.1.1 for Android
 The Google Game Services AIR native extension allows you to focus on your game logic and easily have access to all the cool features of this great SDK in your AIR games.
 
 **NOTICE: Google has discontinued the [Game Services Project for iOS](https://android-developers.googleblog.com/2017/04/focusing-our-google-play-games-services.html). On iOS, you may consider using [Firebase](https://github.com/myflashlab/Firebase-ANE/)**
@@ -139,6 +139,10 @@ http://www.myflashlabs.com/product/game-services-air-native-extension/
 [How to get started with Games Services?](https://github.com/myflashlab/GameServices-ANE/wiki#get-started-with-games-services)
 
 # Changelog
+*Nov 18, 2018 - V4.1.1*
+* Works with OverrideAir ANE V5.6.1 or higher
+* Works with ANELAB V1.1.26 or higher
+
 *Sep 20, 2018 - V4.1.0*
 * Updated to dependencies V15.0.1
 * ANE still depends on GoogleSignIn ANE but notice that we have updated GoogleSignin ANE also to V1.3.0 and have removed AndroidSupport ANE and have replaced it with smaller ones.

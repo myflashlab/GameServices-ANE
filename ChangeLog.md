@@ -1,5 +1,9 @@
 Game Services Adobe Air Native Extension
 
+*Nov 18, 2018 - V4.1.1*
+* Works with OverrideAir ANE V5.6.1 or higher
+* Works with ANELAB V1.1.26 or higher
+
 *Sep 20, 2018 - V4.1.0*
 * Updated to dependencies V15.0.1
 * ANE still depends on GoogleSignIn ANE but notice that we have updated GoogleSignin ANE also to V1.3.0 and have removed AndroidSupport ANE and have replaced it with smaller ones.
