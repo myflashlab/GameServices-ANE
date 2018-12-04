@@ -130,9 +130,9 @@ Embedding the ANE:
 3. implement [GoogleSignIn](https://www.myflashlabs.com/product/google-signin-ane-adobe-air-native-extension/) in your app first.
 
 # Commercial Version
-http://www.myflashlabs.com/product/game-services-air-native-extension/
+https://www.myflashlabs.com/product/game-services-air-native-extension/
 
-![Game Services ANE](https://www.myflashlabs.com/wp-content/uploads/2016/04/product_adobe-air-ane-extension-game-services-595x738.jpg)
+[![Game Services ANE](https://www.myflashlabs.com/wp-content/uploads/2016/04/product_adobe-air-ane-extension-game-services-2018-595x738.jpg)](https://www.myflashlabs.com/product/game-services-air-native-extension/)
 
 # Tutorials
 [How to embed ANEs into **FlashBuilder**, **FlashCC** and **FlashDevelop**](https://www.youtube.com/watch?v=Oubsb_3F3ec&list=PL_mmSjScdnxnSDTMYb1iDX4LemhIJrt1O)  
