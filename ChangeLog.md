@@ -1,5 +1,8 @@
 Game Services Adobe Air Native Extension
 
+*Apr 5, 2019 - V4.2.0*
+* Added property ```Games.realtime.showWaitingRoomAutomatically```. You may set this property to false to hide the waiting room when players are connecting to the room.
+
 *Nov 18, 2018 - V4.1.1*
 * Works with OverrideAir ANE V5.6.1 or higher
 * Works with ANELAB V1.1.26 or higher
