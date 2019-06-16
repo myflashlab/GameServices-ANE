@@ -534,6 +534,11 @@ public class Main extends Sprite
 			trace("secondaryCategory: " + $game.secondaryCategory);
 			trace("snapshotsEnabled: " + $game.snapshotsEnabled);
 			trace("themeColor: " + $game.themeColor);
+			
+			$game.loadIconImage(false, function ($file:File):void
+			{
+				trace("$game.loadIconImage:" + $file.nativePath);
+			});
 		}
 		
 		// ---------------------------------------------------------------------------------------------------------
@@ -1094,6 +1099,7 @@ public class Main extends Sprite
 		
 		function createRoom(e:MouseEvent):void
 		{
+			Games.realtime.showWaitingRoomAutomatically = false;
 			Games.realtime.createRoom(1, 2, 0, -1, null);
 		}
 		

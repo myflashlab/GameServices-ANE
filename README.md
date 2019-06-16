@@ -123,7 +123,7 @@ Embedding the ANE:
 ```
 
 # Requirements 
-1. Android API 15+
+1. Android API 19+
 2. AIR SDK 30+
 3. implement [GoogleSignIn](https://www.myflashlabs.com/product/google-signin-ane-adobe-air-native-extension/) in your app first.
 

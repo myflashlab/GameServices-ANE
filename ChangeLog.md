@@ -1,5 +1,10 @@
 Game Services Adobe Air Native Extension
 
+*Jun 17, 2019 - V4.3.0*
+* Updated Games SDK and dependencies to be synced with GoogleSignIn ANE V2.0.0 make sure you are updating the dependency ANEs to the latest available versions.
+* Removed deprecated properties *highSpenderProbability*, *churnProbability*, *spendProbability* and *totalSpendNext28Days* from **PlayerStats** class.
+* Added property *snapshotId* to the **SnapshotMetadata** class.
+
 *Apr 5, 2019 - V4.2.0*
 * Added property ```Games.realtime.showWaitingRoomAutomatically```. You may set this property to false to hide the waiting room when players are connecting to the room.
 

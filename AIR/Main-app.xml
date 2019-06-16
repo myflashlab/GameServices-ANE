@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<application xmlns="http://ns.adobe.com/air/application/31.0">
+<application xmlns="http://ns.adobe.com/air/application/32.0">
     <id>com.doitflash.games.ex.realtime</id>
-    <versionNumber>4.1.1</versionNumber>
+    <versionNumber>4.3.0</versionNumber>
     <supportedProfiles>mobileDevice</supportedProfiles>
     <filename>exGameServices</filename>
     <name>Game Services ANE</name>
@@ -10,10 +10,11 @@
 	
 	<uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-sdk android:targetSdkVersion="26"/>
 
     <!-- Optional. Add this if you are using the "Games.metadata.getCurrentAccountName" method -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-	<uses-sdk android:targetSdkVersion="26"/>
+
 	
 	<application>
 		
