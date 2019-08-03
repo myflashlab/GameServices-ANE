@@ -1,5 +1,9 @@
 Game Services Adobe Air Native Extension
 
+*Aug 3, 2019 - V4.3.1*
+* Added Android 64-bit support
+* Removed **.os** property, use ```OverrideAir.os``` instead.
+
 *Jun 17, 2019 - V4.3.0*
 * Updated Games SDK and dependencies to be synced with GoogleSignIn ANE V2.0.0 make sure you are updating the dependency ANEs to the latest available versions.
 * Removed deprecated properties *highSpenderProbability*, *churnProbability*, *spendProbability* and *totalSpendNext28Days* from **PlayerStats** class.
