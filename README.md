@@ -103,9 +103,9 @@ Embedding the ANE:
 
         <!-- Dependencies required by the GSignIn ANE -->
         <extensionID>com.myflashlab.air.extensions.dependency.overrideAir</extensionID>
-        <extensionID>com.myflashlab.air.extensions.dependency.androidSupport.arch</extensionID>
-        <extensionID>com.myflashlab.air.extensions.dependency.androidSupport.core</extensionID>
-        <extensionID>com.myflashlab.air.extensions.dependency.androidSupport.v4</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.androidx.arch</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.androidx.core</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.androidx.lifecycle</extensionID>
         <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.auth</extensionID>
         <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.base</extensionID>
         <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.basement</extensionID>
@@ -117,6 +117,7 @@ Embedding the ANE:
         <!-- Dependencies required by the gameServices ANE -->
         <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.games</extensionID>
         <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.drive</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.androidx.design</extensionID>
 
     </extensions>
 -->
@@ -124,7 +125,7 @@ Embedding the ANE:
 
 # Requirements 
 1. Android API 19+
-2. AIR SDK 30+
+2. AIR SDK 33+
 3. implement [GoogleSignIn](https://www.myflashlabs.com/product/google-signin-ane-adobe-air-native-extension/) in your app first.
 
 # Commercial Version

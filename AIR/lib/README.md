@@ -4,5 +4,6 @@ Copy the purchased [gameServices.ane](https://www.myflashlabs.com/product/game-s
     * All the dependencies required by the googleSignIn.ane
 1. googlePlayServices_drive.ane
 1. googlePlayServices_games.ane
+1. androidx_design.ane
 
 Download dependency ANEs from here: https://github.com/myflashlab/common-dependencies-ANE

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <application xmlns="http://ns.adobe.com/air/application/32.0">
     <id>com.doitflash.games.ex.realtime</id>
-    <versionNumber>4.3.0</versionNumber>
+    <versionNumber>5.0.0</versionNumber>
     <supportedProfiles>mobileDevice</supportedProfiles>
     <filename>exGameServices</filename>
     <name>Game Services ANE</name>
@@ -10,7 +10,7 @@
 	
 	<uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-sdk android:targetSdkVersion="26"/>
+    <uses-sdk android:targetSdkVersion="28"/>
 
     <!-- Optional. Add this if you are using the "Games.metadata.getCurrentAccountName" method -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -74,9 +74,9 @@
 
         <!-- Dependencies required by the GSignIn ANE -->
         <extensionID>com.myflashlab.air.extensions.dependency.overrideAir</extensionID>
-        <extensionID>com.myflashlab.air.extensions.dependency.androidSupport.arch</extensionID>
-        <extensionID>com.myflashlab.air.extensions.dependency.androidSupport.core</extensionID>
-        <extensionID>com.myflashlab.air.extensions.dependency.androidSupport.v4</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.androidx.arch</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.androidx.core</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.androidx.lifecycle</extensionID>
         <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.auth</extensionID>
         <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.base</extensionID>
         <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.basement</extensionID>
@@ -88,6 +88,7 @@
         <!-- Dependencies required by the gameServices ANE -->
         <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.games</extensionID>
         <extensionID>com.myflashlab.air.extensions.dependency.googlePlayServices.drive</extensionID>
+        <extensionID>com.myflashlab.air.extensions.dependency.androidx.design</extensionID>
 
     </extensions>
 </application>

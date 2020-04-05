@@ -1,5 +1,8 @@
 Game Services Adobe Air Native Extension
 
+*Apr 05, 2020 - V5.0.0*
+* upgraded to Androidx libraries
+
 *Aug 3, 2019 - V4.3.1*
 * Added Android 64-bit support
 * Removed **.os** property, use ```OverrideAir.os``` instead.
