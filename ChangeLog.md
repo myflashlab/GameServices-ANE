@@ -1,4 +1,8 @@
-Game Services Adobe Air Native Extension
+# Game Services Adobe Air Native Extension
+
+*Jul 31, 2020 - v6.0.0*
+- Upgrade dependencies to the latest versions.
+- Fixed some minor issues and refactor native codes.
 
 *Apr 05, 2020 - V5.0.0*
 * upgraded to Androidx libraries
